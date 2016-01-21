@@ -5,7 +5,7 @@ namespace Modules\Formbuilder\Entities;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Modules\Formbuilder\Utility\FormBuilderShortcode;
+use Modules\Formbuilder\Utility\FormbuilderShortcode;
 use Shortcode;
 
 class Forms extends Model
@@ -91,7 +91,7 @@ class Forms extends Model
     public function getFields()
     {
         $content = $this->content;
-        //FormBuilderShortcode::registerShortcode();
+        //FormbuilderShortcode::registerShortcode();
         $shortcodes = Shortcode::all();
         $pattern = $this->getRegex($shortcodes);
         preg_replace_callback("/{$pattern}/s", [&$this, 'getFieldsData'], $content);

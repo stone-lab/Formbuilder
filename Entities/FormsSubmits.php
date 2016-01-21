@@ -6,7 +6,7 @@ use App\Events\FormbuilderEvent;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Modules\Formbuilder\Utility\FormBuilderShortcode;
+use Modules\Formbuilder\Utility\FormbuilderShortcode;
 
 class FormsSubmits extends Model
 {
@@ -44,7 +44,7 @@ class FormsSubmits extends Model
                         $formSubmitData->field_order = $order;
                         $formSubmitData->save();
                         ++$order;
-                        FormBuilderShortcode::registerSubmitShortcode($key, $value);
+                        FormbuilderShortcode::registerSubmitShortcode($key, $value);
                     }
                 }
                 foreach ($dataFiles as $key => $value) {
@@ -57,7 +57,7 @@ class FormsSubmits extends Model
                         $formSubmitData->is_file = 1;
                         $formSubmitData->save();
                         ++$order;
-                        FormBuilderShortcode::registerSubmitShortcode($key, $value);
+                        FormbuilderShortcode::registerSubmitShortcode($key, $value);
                     }
                 }
                 DB::commit();

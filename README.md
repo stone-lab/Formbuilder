@@ -9,7 +9,7 @@ http://sky.pingpong-labs.com/docs/2.0/shortcode
 
 ## Instructions
 To make it work, you need to add a middleware to the Page Module.
-Add a file PageMiddleware inside Modules/Page/Http/Middleware
+Add a file PageMiddleware.php inside Modules/Page/Http/Middleware
 
 Put follwing content into it:
 ```php
@@ -38,8 +38,19 @@ class PageMiddleware
 }
 ```
 
+Adjust the routes in Modules/Page/Http/frontendRoutes.php to 
+```php
+    $router->get('{uri}', ['middleware'=>'page','uses' => 'PublicController@uri', 'as' => 'page']);
+    $router->get('/', ['middleware'=>'page','uses' => 'PublicController@homepage', 'as' => 'homepage']);
+```
+
+And add to app/Http/Kernel.php to $routeMiddleware
+```php
+        'page' => 'Modules\Page\Http\Middleware\PageMiddleware',
+```
+
+That's it.
+
 ## Permission
 Don't forget to set the Permissions.
 
-## Further
-More Instructions will follow soon.

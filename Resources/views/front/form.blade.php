@@ -10,5 +10,5 @@
 @endif
 {!! Form::open(['route' => ['front.formbuilder.formbuilder.send'], 'method' => 'post', 'files' => true, 'class' => 'form-horizontal']) !!}
 	{!! Form::hidden("formbuilder_id", $form->id) !!}
-	{!! $form->content !!}
+	{!! Shortcode::compile($form->content) !!}
 {!! Form::close() !!}

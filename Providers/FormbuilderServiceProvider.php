@@ -40,29 +40,29 @@ class FormbuilderServiceProvider extends ServiceProvider
 
     public static function registerShortcode()
     {
-        Shortcode::register('form', 'Modules\Formbuilder\Utility\FormBuilderShortcode@form');
-        Shortcode::register('textinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@textinput');
-        Shortcode::register('passwordinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@passwordinput');
-        Shortcode::register('searchinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@searchinput');
-        Shortcode::register('prependedtext', 'Modules\Formbuilder\Utility\FormBuilderShortcode@prependedtext');
-        Shortcode::register('appendedtext', 'Modules\Formbuilder\Utility\FormBuilderShortcode@appendedtext');
-        Shortcode::register('prependedcheckbox', 'Modules\Formbuilder\Utility\FormBuilderShortcode@prependedcheckbox');
-        Shortcode::register('appendedcheckbox', 'Modules\Formbuilder\Utility\FormBuilderShortcode@appendedcheckbox');
-        Shortcode::register('buttondropdown', 'Modules\Formbuilder\Utility\FormBuilderShortcode@buttondropdown');
-        Shortcode::register('textarea', 'Modules\Formbuilder\Utility\FormBuilderShortcode@textarea');
-        Shortcode::register('multiplecheckboxes', 'Modules\Formbuilder\Utility\FormBuilderShortcode@multiplecheckboxes');
-        Shortcode::register('multiplecheckboxesinline', 'Modules\Formbuilder\Utility\FormBuilderShortcode@multiplecheckboxesinline');
-        Shortcode::register('multipleradios', 'Modules\Formbuilder\Utility\FormBuilderShortcode@multipleradios');
-        Shortcode::register('multipleradiosinline', 'Modules\Formbuilder\Utility\FormBuilderShortcode@multipleradiosinline');
-        Shortcode::register('selectbasic', 'Modules\Formbuilder\Utility\FormBuilderShortcode@selectbasic');
-        Shortcode::register('selectmultiple', 'Modules\Formbuilder\Utility\FormBuilderShortcode@selectmultiple');
-        Shortcode::register('filebutton', 'Modules\Formbuilder\Utility\FormBuilderShortcode@filebutton');
-        Shortcode::register('button', 'Modules\Formbuilder\Utility\FormBuilderShortcode@button');
-        Shortcode::register('buttondouble', 'Modules\Formbuilder\Utility\FormBuilderShortcode@buttondouble');
-        Shortcode::register('emailinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@emailinput');
-        Shortcode::register('urlinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@urlinput');
-        Shortcode::register('telinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@telinput');
-        Shortcode::register('dateinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@dateinput');
-        Shortcode::register('numberinput', 'Modules\Formbuilder\Utility\FormBuilderShortcode@numberinput');
+        Shortcode::register('form', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@form');
+        Shortcode::register('textinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@textinput');
+        Shortcode::register('passwordinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@passwordinput');
+        Shortcode::register('searchinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@searchinput');
+        Shortcode::register('prependedtext', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@prependedtext');
+        Shortcode::register('appendedtext', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@appendedtext');
+        Shortcode::register('prependedcheckbox', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@prependedcheckbox');
+        Shortcode::register('appendedcheckbox', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@appendedcheckbox');
+        Shortcode::register('buttondropdown', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@buttondropdown');
+        Shortcode::register('textarea', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@textarea');
+        Shortcode::register('multiplecheckboxes', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@multiplecheckboxes');
+        Shortcode::register('multiplecheckboxesinline', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@multiplecheckboxesinline');
+        Shortcode::register('multipleradios', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@multipleradios');
+        Shortcode::register('multipleradiosinline', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@multipleradiosinline');
+        Shortcode::register('selectbasic', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@selectbasic');
+        Shortcode::register('selectmultiple', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@selectmultiple');
+        Shortcode::register('filebutton', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@filebutton');
+        Shortcode::register('button', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@button');
+        Shortcode::register('buttondouble', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@buttondouble');
+        Shortcode::register('emailinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@emailinput');
+        Shortcode::register('urlinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@urlinput');
+        Shortcode::register('telinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@telinput');
+        Shortcode::register('dateinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@dateinput');
+        Shortcode::register('numberinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@numberinput');
     }
 }
