@@ -73,6 +73,7 @@ class CreateFormbuilderTables extends Migration
 
         Schema::create('formbuilder__form_submit_data', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->increments('id');
             $table->integer('submit_id')->unsigned();
             $table->string('field_name');
             $table->longText('field_value');
