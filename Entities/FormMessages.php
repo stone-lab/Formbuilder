@@ -9,6 +9,7 @@ class FormMessages extends Model
     protected $table = 'formbuilder__form_messages';
     public $translatedAttributes = [];
     protected $fillable = ['form_id',
+                            'locale',
                             'success',
                             'failure',
                             'validation_error',

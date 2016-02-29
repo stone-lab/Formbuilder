@@ -3,8 +3,8 @@
 namespace Modules\Formbuilder\Shortcodes;
 
 use Illuminate\View\View;
-use Shortcode;
 use Modules\Formbuilder\Entities\Forms;
+use Shortcode;
 
 class FormbuilderShortcode
 {
@@ -12,6 +12,7 @@ class FormbuilderShortcode
     {
         Shortcode::register($key, function ($attr, $content = null, $name = null) use ($value) {
             $text = Shortcode::compile($content);
+
             return $value;
         });
     }
@@ -26,6 +27,7 @@ class FormbuilderShortcode
 
             $content = view($templateForm, compact('form', 'attr'))->render();
         }
+
         return $content;
     }
 

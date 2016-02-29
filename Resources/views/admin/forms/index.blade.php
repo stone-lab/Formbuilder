@@ -46,7 +46,9 @@
                             </td>
                             <td>
                                 <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
-                                    {{ $form->name }}
+									<?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
+									<?php $formName    = $form->getFormContent($currentLocale)->name ?>
+                                    {{ $formName }}
                                 </a>
                             </td>
                             <td>

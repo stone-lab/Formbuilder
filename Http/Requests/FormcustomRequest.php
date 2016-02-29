@@ -59,9 +59,10 @@ class FormcustomRequest extends FormRequest
         $messages = [];
         $data = $this->request->all();
         $formId = array_get($data, 'formbuilder_id');
+        $locale = array_get($data, 'formbuilder_locale');
         $formBuilder = Forms::find($formId);
         if ($formBuilder->id) {
-            $formMessages = $formBuilder->messages;
+            $formMessages = $formBuilder->getFormMessages($locale);
             if ($formMessages->invalid_required != '') {
                 $messages['required'] = $formMessages->invalid_required;
             }

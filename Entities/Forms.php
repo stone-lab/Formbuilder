@@ -5,15 +5,21 @@ namespace Modules\Formbuilder\Entities;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Modules\Formbuilder\Utility\FormbuilderShortcode;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Modules\Formbuilder\Shortcodes\FormbuilderShortcode;
 use Shortcode;
 
 class Forms extends Model
 {
     protected $table = 'formbuilder__forms';
     public $translatedAttributes = [];
-    protected $fillable = ['name', 'content', 'json', 'edited'];
+    protected $fillable = ['active'];
     protected $fieldsDatas = [];
+
+    public function contents()
+    {
+        return $this->hasOne('Modules\Formbuilder\Entities\FormContent', 'form_id', 'id');
+    }
 
     public function mail()
     {
@@ -30,24 +36,23 @@ class Forms extends Model
         return $this->hasMany('Modules\Formbuilder\Entities\FormsSubmits', 'form_id', 'id');
     }
 
-    public function getFormMail()
+    public function getFormContent($locale)
     {
-        if ($this->id) {
-            $formMail = $this->mail;
-        } else {
-            $formMail = FormMail::firstOrNew(array('id' => -1));
-        }
+        $formContent = FormContent::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
+
+        return $formContent;
+    }
+
+    public function getFormMail($locale)
+    {
+        $formMail = FormMail::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
 
         return $formMail;
     }
 
-    public function getFormMessages()
+    public function getFormMessages($locale)
     {
-        if ($this->id) {
-            $formMessages = $this->messages;
-        } else {
-            $formMessages = FormMessages::firstOrNew(array('id' => -1));
-        }
+        $formMessages = FormMessages::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
 
         return $formMessages;
     }
@@ -55,29 +60,38 @@ class Forms extends Model
     public static function storeForm($data)
     {
         $bResult = false;
-        $dataForm = array_get($data, 'form');
-        $dataMail = array_get($data, 'mail');
-        $dataMessages = array_get($data, 'messages');
+
+        $languages = LaravelLocalization::getSupportedLocales();
 
         DB::beginTransaction();
         try {
-            $id = !empty(array_get($dataForm, 'id', 0))?array_get($dataForm, 'id', 0):null;
-            $editedContent = array_get($dataForm, 'content_edited', '');
-            if ($editedContent) {
-                $dataForm['content'] = $editedContent;
-                $dataForm['edited'] = 1;
+            $id            = !empty(array_get($data, 'id', 0))?array_get($data, 'id', 0):null;
+            $formBuilder    = self::firstOrNew(['id'=>$id]);
+            $formBuilder->fill($data)->save();
+            $formId        = $formBuilder->id;
+
+            foreach ($languages as $locale => $value) {
+                $dataOfLocale    = array_get($data, $locale);
+                $dataForm        = array_get($dataOfLocale, 'form');
+                $dataMail        = array_get($dataOfLocale, 'mail');
+                $dataMessages    = array_get($dataOfLocale, 'messages');
+
+                $editedContent = array_get($dataForm, 'content_edited', '');
+                if ($editedContent) {
+                    $dataForm['content'] = $editedContent;
+                    $dataForm['edited'] = 1;
+                }
+
+                $formContent = FormContent::firstOrNew(array('form_id' => $formId, 'locale' => $locale));
+                $formContent->fill($dataForm)->save();
+
+                $formMail = FormMail::firstOrNew(array('form_id' => $formId, 'locale' => $locale));
+                $formMail->fill($dataMail)->save();
+
+                $formMessages = FormMessages::firstOrNew(array('form_id' => $formId, 'locale' => $locale));
+                $formMessages->fill($dataMessages)->save();
             }
 
-            $formBuilder = self::firstOrNew(['id'=>$id]);
-
-            $formBuilder->fill($dataForm)->save();
-            $formId = $formBuilder->id;
-
-            $formMail = FormMail::firstOrNew(array('form_id' => $formId));
-            $formMail->fill($dataMail)->save();
-
-            $formMessages = FormMessages::firstOrNew(array('form_id' => $formId));
-            $formMessages->fill($dataMessages)->save();
             DB::commit();
             $bResult = true;
         } catch (\Exception $ex) {
@@ -90,12 +104,14 @@ class Forms extends Model
 
     public function getFields()
     {
-        $content = $this->content;
-        //FormbuilderShortcode::registerShortcode();
-        $shortcodes = Shortcode::all();
-        $pattern = $this->getRegex($shortcodes);
-        preg_replace_callback("/{$pattern}/s", [&$this, 'getFieldsData'], $content);
-
+        $languages = LaravelLocalization::getSupportedLocales();
+        foreach ($languages as $locale => $value) {
+            $content = $this->getFormContent($locale)->content;
+            //FormbuilderShortcode::registerShortcode();
+            $shortcodes = Shortcode::all();
+            $pattern    = $this->getRegex($shortcodes);
+            preg_replace_callback("/{$pattern}/s", [&$this, 'getFieldsData'], $content);
+        }
         $fields = $this->fieldsDatas;
 
         return $fields;

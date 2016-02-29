@@ -1,8 +1,8 @@
-#components {
+.form-components {
   min-height: 500px;
 }
 
-#target fieldset {
+.form-target fieldset {
   border: 1px solid #ccc;
   min-height: 600px;
   padding: 5px;
@@ -45,12 +45,12 @@ textarea {
   overflow: hidden;
 }
 
-#render{
+.render{
   min-height: 500px;
   font-family: monospace;
 }
 
-#render_shortcode{
+.render_shortcode{
   min-height: 500px;
   font-family: monospace;
 }
@@ -119,7 +119,7 @@ form .popover form {
   content: " *";
   color: #fc4c5e;
 }
-#render_json,
-#render_shortcode{
+.render-json,
+.render-shortcode{
 	display:none;
 }

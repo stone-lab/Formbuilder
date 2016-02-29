@@ -13,6 +13,15 @@ class CreateFormbuilderTables extends Migration
         Schema::create('formbuilder__forms', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->boolean('active')->default(1);
+            $table->timestamps();
+        });
+
+        Schema::create('formbuilder__form_contents', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('form_id')->unsigned();
+            $table->string('locale');
             $table->string('name');
             $table->longText('content');
             $table->longText('json');
@@ -24,6 +33,7 @@ class CreateFormbuilderTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('form_id')->unsigned();
+            $table->string('locale');
             $table->text('success')->nullable();
             $table->text('failure')->nullable();
             $table->text('validation_error')->nullable();
@@ -50,6 +60,7 @@ class CreateFormbuilderTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('form_id')->unsigned();
+            $table->string('locale');
             $table->text('to');
             $table->text('from');
             $table->text('subject');
@@ -66,6 +77,7 @@ class CreateFormbuilderTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('form_id')->unsigned();
+            $table->string('locale');
             $table->text('client_ip');
             $table->timestamps();
             $table->foreign('form_id')->references('id')->on('formbuilder__forms')->onUpdate('cascade')->onDelete('cascade');
@@ -92,6 +104,7 @@ class CreateFormbuilderTables extends Migration
         Schema::drop('formbuilder__form_submits');
         Schema::drop('formbuilder__form_mail');
         Schema::drop('formbuilder__form_messages');
+        Schema::drop('formbuilder__form_contents');
         Schema::drop('formbuilder__forms');
     }
 }

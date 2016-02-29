@@ -6,13 +6,13 @@ use App\Events\FormbuilderEvent;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Modules\Formbuilder\Utility\FormbuilderShortcode;
+use Modules\Formbuilder\Shortcodes\FormbuilderShortcode;
 
 class FormsSubmits extends Model
 {
     protected $table = 'formbuilder__form_submits';
     public $translatedAttributes = [];
-    protected $fillable = ['form_id'];
+    protected $fillable = ['form_id', 'locale', 'client_ip'];
     public $unSaveField = ['_token', 'formbuilder_id'];
 
     public function formSubmitData()
@@ -24,14 +24,16 @@ class FormsSubmits extends Model
     {
         $bResult = false;
         $formId = array_get($data, 'formbuilder_id');
+        $locale = array_get($data, 'formbuilder_locale');
         $clientIp = array_get($data, 'client_ip');
         $formBuilder = Forms::find($formId);
         if ($formBuilder->id) {
             DB::beginTransaction();
             try {
                 $formSubmit = new self();
-                $formSubmit->form_id = $formId;
-                $formSubmit->client_ip = $clientIp;
+                $formSubmit->form_id    = $formId;
+                $formSubmit->locale    = $locale;
+                $formSubmit->client_ip    = $clientIp;
                 $formSubmit->save();
                 $formSubmitId = $formSubmit->id;
                 $order = 0;
@@ -62,7 +64,7 @@ class FormsSubmits extends Model
                 }
                 DB::commit();
                 $formMail = new FormMail();
-                $formMail->sendMail($formSubmitId);
+                $formMail->sendMail($formSubmitId, $locale);
                 event(new FormbuilderEvent('submit_form', $data));
                 $bResult = true;
             } catch (\Exception $ex) {

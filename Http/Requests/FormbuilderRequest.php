@@ -2,14 +2,24 @@
 
 namespace Modules\Formbuilder\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Modules\Core\Internationalisation\BaseFormRequest;
 
-class FormbuilderRequest extends FormRequest
+class FormbuilderRequest extends BaseFormRequest
 {
     /**
      * @return array
      */
     public function rules()
+    {
+        $rules = [];
+
+        return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function translationRules()
     {
         $rules = [
             'form.name' => 'required',
@@ -35,12 +45,20 @@ class FormbuilderRequest extends FormRequest
      */
     public function messages()
     {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function translationMessages()
+    {
         return [
-            'form.name' => trans('formbuilder::formbuilder.message.form_name_required'),
-            'mail.to' => trans('formbuilder::formbuilder.message.mail_to_required'),
-            'mail.from' => trans('formbuilder::formbuilder.message.mail_from_required'),
-            'mail.subject' => trans('formbuilder::formbuilder.message.mail_subject_required'),
-            'mail.body' => trans('formbuilder::formbuilder.message.mail_body_required'),
+            'form.name.required' => trans('formbuilder::formbuilder.message.form_name_required'),
+            'mail.to.required' => trans('formbuilder::formbuilder.message.mail_to_required'),
+            'mail.from.required' => trans('formbuilder::formbuilder.message.mail_from_required'),
+            'mail.subject.required' => trans('formbuilder::formbuilder.message.mail_subject_required'),
+            'mail.body.required' => trans('formbuilder::formbuilder.message.mail_body_required'),
         ];
     }
 }

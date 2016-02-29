@@ -24,31 +24,43 @@
 
 @section('content')
 	{!! Form::open(['route' => ['admin.formbuilder.formbuilder.update', $form->id], 'method' => 'put', 'files' => true]) !!}
+	{!! Form::hidden("id", $form->id) !!}
     <div class="row">
         <div class="col-xs-12">
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-					<li class="active">
-						<a data-toggle="tab" href="#tab_form" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.form') !!}</a>
-						
-					</li>
-					<li class="">
-						<a data-toggle="tab" href="#tab_mail" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.mail') !!}</a>
-					</li>
-					<li class="">
-						<a data-toggle="tab" href="#tab_messages" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.messages') !!}</a>
-					</li>
-				</ul>
+                @include('partials.form-tab-headers', ['fields' => ['title', 'body']])
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_form">
-						@include('formbuilder::admin.forms.partials.create.tabs.form')
-					</div>
-					<div class="tab-pane" id="tab_mail">
-						@include('formbuilder::admin.forms.partials.create.tabs.mail')
-					</div>
-					<div class="tab-pane" id="tab_messages">
-						@include('formbuilder::admin.forms.partials.create.tabs.messages')
-					</div>
+                    <?php $i = 0; ?>
+                    <?php foreach (LaravelLocalization::getSupportedLocales() as $locale => $language): ?>
+                    <?php ++$i; ?>
+                    <div class="tab-pane {{ App::getLocale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
+                        <div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a data-toggle="tab" href="#tab_form_{{ $i }}" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.form') !!}</a>
+									
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#tab_mail_{{ $i }}" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.mail') !!}</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#tab_messages_{{ $i }}" aria-expanded="false" onclick="">{!! trans('formbuilder::formbuilder.tab.messages') !!}</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_form_{{ $i }}">
+									@include('formbuilder::admin.forms.partials.create.tabs.form', ['lang' => $locale])
+								</div>
+								<div class="tab-pane" id="tab_mail_{{ $i }}">
+									@include('formbuilder::admin.forms.partials.create.tabs.mail', ['lang' => $locale])
+								</div>
+								<div class="tab-pane" id="tab_messages_{{ $i }}">
+									@include('formbuilder::admin.forms.partials.create.tabs.messages', ['lang' => $locale])
+								</div>
+							</div>
+						</div> {{-- end nav-tabs-custom --}}
+                    </div>
+                    <?php endforeach; ?>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('formbuilder::formbuilder.button.update') }}</button>
                         <button class="btn btn-default btn-flat" name="button" type="reset">{{ trans('formbuilder::formbuilder.button.reset') }}</button>

@@ -20,5 +20,11 @@ define([
       fields[name]["value"] = value;
       this.set("fields", fields);
     }
+    , setLocale: function(locale) {
+      this.set("locale", locale);
+    }
+    , getLocale: function() {
+      return this.get("locale");
+    }
   });
 });

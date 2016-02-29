@@ -41,11 +41,12 @@ class FormController extends BasePublicController
             }
         }
         $formId = array_get($data, 'formbuilder_id');
+        $locale = array_get($data, 'formbuilder_locale');
         $formBuilder = Forms::find($formId);
         $successMsg = trans('formbuilder::formbuilder.message.success_submit');
         $errorMsg = trans('formbuilder::formbuilder.message.error_submit');
         if ($formBuilder->id) {
-            $formMessages = $formBuilder->messages;
+            $formMessages = $formBuilder->getFormMessages($locale);
             if ($formMessages->success != '') {
                 $successMsg = $formMessages->success;
             }

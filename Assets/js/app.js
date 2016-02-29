@@ -12,41 +12,47 @@ define([
   , renderTab, aboutTab
 ){
   return {
-    initialize: function(jsonStringFormbuilder){
-
+    initialize: function(jsonStringFormbuilder, locale){
+		
       //Bootstrap tabs from json.
       new TabView({
         title: "Input"
+		, locale: locale
         , collection: new SnippetsCollection(JSON.parse(inputJSON))
       });
       new TabView({
         title: "Radios / Checkboxes"
+		, locale: locale
         , collection: new SnippetsCollection(JSON.parse(radioJSON))
       });
       new TabView({
         title: "Select"
+		, locale: locale
         , collection: new SnippetsCollection(JSON.parse(selectJSON))
       });
       new TabView({
         title: "Buttons"
+		, locale: locale
         , collection: new SnippetsCollection(JSON.parse(buttonsJSON))
       });
-      new TabView({
+      /* new TabView({
         title: "Rendered"
+		, locale: locale
         , content: renderTab
-      });
+      }); */
      /*  new TabView({
         title: "About"
         , content: aboutTab
       }); */
 
       //Make the first tab active!
-      $("#components .tab-pane").first().addClass("active");
-      $("#formtabs li").first().addClass("active");
-
+      $("#components_" + locale + " .tab-pane").first().addClass("active");
+      $("#formtabs_" + locale + " li").first().addClass("active");
+	  
       // Bootstrap "My Form" with 'Form Name' snippet.
       new MyFormView({
         title: "Original"
+        , locale: locale
         , collection: new MyFormSnippetsCollection(jsonStringFormbuilder)
       });
     }

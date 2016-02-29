@@ -38,7 +38,10 @@ class FormbuilderServiceProvider extends ServiceProvider
         // add bindings
     }
 
-    public static function registerShortcode()
+    /**
+     * Registering the Shortcodes
+     */
+    private function registerShortcode()
     {
         Shortcode::register('form', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@form');
         Shortcode::register('textinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@textinput');

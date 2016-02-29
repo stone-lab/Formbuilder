@@ -12,6 +12,7 @@ class FormMail extends Model
     protected $table = 'formbuilder__form_mail';
     public $translatedAttributes = [];
     protected $fillable = ['form_id',
+                            'locale',
                             'to',
                             'from',
                             'subject',
@@ -22,13 +23,13 @@ class FormMail extends Model
                             'use_html',
                             ];
 
-    public function sendMail($formSubmitId)
+    public function sendMail($formSubmitId, $locale)
     {
         $formSubmit = FormsSubmits::findOrFail($formSubmitId);
         $formSubmitData = $formSubmit->formSubmitData;
         $formId = $formSubmit->form_id;
         $form = Forms::findOrFail($formId);
-        $formMail = $form->mail;
+        $formMail = $form->getFormMail($locale);
 
         $to = $formMail->to;
         $from = $formMail->from;

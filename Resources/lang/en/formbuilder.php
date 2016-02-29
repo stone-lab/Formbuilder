@@ -30,6 +30,7 @@ return [
         'your_form' => 'Your form',
         'drag_drop_components' => 'Drag & Drop components',
         'generate_to_edit' => 'Generate to edit',
+        'copy_form_builder' => 'Copy form builder',
     ],
     'tab' => [
         'form' => 'Form',

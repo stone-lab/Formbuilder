@@ -1,4 +1,4 @@
-function showEditTextarea(){
-	$('#render_edited').val($('#render_shortcode').val());
-	$('#content_edited').show();
+function showEditTextarea(locale){
+	$('#render_edited_' + locale).val($('#render_shortcode_' + locale).val());
+	$('#content_edited_' + locale).show();
 }

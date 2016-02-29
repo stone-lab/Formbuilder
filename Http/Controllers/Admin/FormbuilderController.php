@@ -44,7 +44,6 @@ class FormbuilderController extends AdminBaseController
     public function store(FormbuilderRequest $request)
     {
         $data = $request->all();
-        /* print_r($data);exit; */
 
         $result = Forms::storeForm($data);
         flash()->success(trans('core::core.messages.resource created', ['name' => trans('formbuilder::formbuilder.title.form')]));
