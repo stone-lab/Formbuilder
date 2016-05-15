@@ -5,7 +5,7 @@
 
 ## Requirements
 
-**IMPORTANT: YOU NEED FIRST INSTALLL THE SHORTCODE PACKAGE***
+**IMPORTANT: YOU NEED FIRST INSTALLL THE SHORTCODE PACKAGE**
 
 To display the forms in the frontend, it requires the Shortcode Module of Pingpong Sky Labs:
 
@@ -19,6 +19,21 @@ Please add this to your composer.json file:
     "pingpong/shortcode": "2.1",
 ```
 
+Next, open a terminal and run.
+```php
+    composer update 
+```
+
+After the composer updated. Add new service provider in config/app.php.
+```php
+  'Pingpong\Shortcode\ShortcodeServiceProvider'
+```
+
+Add new Facade alias.
+```php
+'Shortcode'       => 'Pingpong\Shortcode\ShortcodeFacade',
+```
+Done.
 
 For captcha image, we use the package from Drew Phillips https://www.phpcaptcha.org/
 
@@ -76,6 +91,7 @@ Please add this to your composer.json file:
 ```php    
     "stonelab/formbuilder": "~1.0"
 ```
+and run composer update again.
 
 That's it.
 
@@ -84,6 +100,10 @@ Don't forget to set the Permissions.
 
 ## Notice
 At the moment, the output are Bootstrapped Fields and Wrappers. This will be changed in the future.
+
+## Troubleshoot
+Error: Shortcode not found
+You need first setup the Shortcode package. When this error appears, it means you not have added the alias under config/app.php.
 
 ## TODO
 Make Layout more flexible
