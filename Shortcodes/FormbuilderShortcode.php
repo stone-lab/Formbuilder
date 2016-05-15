@@ -191,4 +191,11 @@ class FormbuilderShortcode
 
         return view($template, compact('attr'))->render();
     }
+
+    public function captchainput($attr, $content = null, $name = null)
+    {
+        $template = 'formbuilder::front.form.captchainput';
+
+        return view($template, compact('attr'))->render();
+    }
 }

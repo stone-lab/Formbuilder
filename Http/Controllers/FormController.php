@@ -8,6 +8,7 @@ use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Formbuilder\Entities\Forms;
 use Modules\Formbuilder\Entities\FormsSubmits;
 use Modules\Formbuilder\Http\Requests\FormcustomRequest;
+use Securimage;
 
 class FormController extends BasePublicController
 {
@@ -21,9 +22,27 @@ class FormController extends BasePublicController
     public function send(FormcustomRequest $request)
     {
         $data = $request->all();
+        $formId = array_get($data, 'formbuilder_id');
+        $formBuilder = Forms::find($formId);
+        $image = new Securimage();
+        $fields = $formBuilder->getFields();
+        foreach ($fields as $key => $value) {
+            if ($key == 'captchainput') {
+                if (array_key_exists($value['name'], $data)) {
+                    $captchaValue = $data[$value['name']];
+                    if ($image->check($captchaValue) !== true) {
+                        // add however you handle feedback to the user here
+                        flash()->error(trans('formbuilder::formbuilder.message.error_captcha'));
+
+                        return redirect()->back()->withInput();
+                    }
+                }
+            }
+        }
+
+        $data = $request->all();
         $data['client_ip'] = $request->ip();
         $files = $request->file();
-        $formId = array_get($data, 'formbuilder_id');
         if (is_array($files)) {
             $dataFiles = array();
             foreach ($files as $key => $file) {
@@ -62,5 +81,19 @@ class FormController extends BasePublicController
         }
 
         return redirect()->back();
+    }
+
+    public function getCaptcha()
+    {
+        $img = new Securimage();
+
+        // set namespace if supplied to script via HTTP GET
+        if (!empty($_GET['namespace'])) {
+            $img->setNamespace($_GET['namespace']);
+        }
+
+        $img->show();  // outputs the image and content headers to the browser
+        // alternate use:
+        // $img->show('/path/to/background_image.jpg');
     }
 }

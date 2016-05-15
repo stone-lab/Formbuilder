@@ -67,5 +67,6 @@ class FormbuilderServiceProvider extends ServiceProvider
         Shortcode::register('telinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@telinput');
         Shortcode::register('dateinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@dateinput');
         Shortcode::register('numberinput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@numberinput');
+        Shortcode::register('captchainput', 'Modules\Formbuilder\Shortcodes\FormbuilderShortcode@captchainput');
     }
 }

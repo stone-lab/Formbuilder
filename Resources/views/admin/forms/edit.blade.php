@@ -119,5 +119,6 @@
                 $(this).parent().append(input);
             });
         });
+		
     </script>
 @stop

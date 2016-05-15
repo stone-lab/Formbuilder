@@ -123,3 +123,12 @@ form .popover form {
 .render-shortcode{
 	display:none;
 }
+.captcha-image{
+	margin:0px 0px 10px;
+}
+.captcha-image-demo{
+	background: url(../images/captcha_image_demo.png) center center no-repeat;
+	display:block;
+	width:215px;
+	height:80px;
+}

@@ -24,7 +24,8 @@ define(function(require) {
   , urlinput                 = require('text!templates/shortcode/urlinput.html')
   , telinput                 = require('text!templates/shortcode/telinput.html')
   , numberinput              = require('text!templates/shortcode/numberinput.html')
-  , dateinput                = require('text!templates/shortcode/dateinput.html');
+  , dateinput                = require('text!templates/shortcode/dateinput.html')
+  , captchainput             = require('text!templates/shortcode/captchainput.html');
 
   return {
     formname                   : formname
@@ -53,5 +54,6 @@ define(function(require) {
 	, telinput                 : telinput
 	, numberinput              : numberinput
 	, dateinput                : dateinput
+	, captchainput             : captchainput
   }
 });

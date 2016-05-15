@@ -1,0 +1,9 @@
+<!-- Captcha input-->
+<div class="form-group">
+  <label class="col-md-3 control-label" for="<%= id %>"><%= label %></label>
+  <div class="<%= inputsize %>">
+	<div class="captcha-image captcha-image-demo"></div>
+    <input id="<%= id %>" name="<%= id %>" type="text" placeholder="<%= placeholder %>" class="form-control <%= inputheight %>" />
+    <% if (helptext.length > 0) { %><p class="help-block"><%= helptext %></p><% } %>
+  </div>
+</div>

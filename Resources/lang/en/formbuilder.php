@@ -45,5 +45,6 @@ return [
         'mail_body_required' => 'Mail body is required.',
         'success_submit' => 'Form was sent successfully.',
         'error_submit' => 'Form was failed to send.',
+        'error_captcha' => 'Incorect Captcha.',
     ],
 ];
