@@ -8,6 +8,15 @@ To display the forms in the frontend, it requires the Shortcode Module of Pingpo
 
 http://sky.pingpong-labs.com/docs/2.0/shortcode
 
+Due Pingponglabs changed the parse logic in the newest version, an incompatibility in some cases could occure.
+That's why we will fix the version to 2.1.
+
+Please add this to your composer.json file:
+```php
+    "pingpong/shortcode": "2.1",
+```
+
+
 For captcha image, we use the package from Drew Phillips https://www.phpcaptcha.org/
 
 Please add this to your composer.json file:
