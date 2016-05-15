@@ -4,6 +4,9 @@
 **You are welcome to work on it**
 
 ## Requirements
+
+**IMPORTANT: YOU NEED FIRST INSTALLL THE SHORTCODE PACKAGE***
+
 To display the forms in the frontend, it requires the Shortcode Module of Pingpong Sky Labs:
 
 http://sky.pingpong-labs.com/docs/2.0/shortcode
@@ -66,6 +69,12 @@ Adjust the routes in Modules/Page/Http/frontendRoutes.php to
 And add to app/Http/Kernel.php to $routeMiddleware
 ```php
         'page' => 'Modules\Page\Http\Middleware\PageMiddleware',
+```
+
+Now you can install the Formbuilder
+Please add this to your composer.json file:
+```php    
+    "stonelab/formbuilder": "~1.0"
 ```
 
 That's it.
