@@ -5,9 +5,11 @@
 
 ## Requirements
 To display the forms in the frontend, it requires the Shortcode Module of Pingpong Sky Labs:
+
 http://sky.pingpong-labs.com/docs/2.0/shortcode
 
 For captcha image, we use the package from Drew Phillips https://www.phpcaptcha.org/
+
 Please add this to your composer.json file:
 ```php
     "dapphp/securimage": "~3.5"
@@ -16,6 +18,7 @@ Link to GitHub: https://github.com/dapphp/securimage
 
 ## Instructions
 To make it work, you need to add a middleware to the Page Module.
+
 Add a file PageMiddleware.php inside Modules/Page/Http/Middleware
 
 Put follwing content into it:
@@ -60,6 +63,9 @@ That's it.
 
 ## Permission
 Don't forget to set the Permissions.
+
+## Notice
+At the moment, the output are Bootstrapped Fields and Wrappers. This will be changed in the future.
 
 ## TODO
 Make Layout more flexible
