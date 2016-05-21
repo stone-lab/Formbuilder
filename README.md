@@ -17,9 +17,8 @@ Todo
 
 Due the package ist based on several prerequisites, you need follow the following steps:
 1. Install Pingponglabs Shortcode Package
-2. Install PHP Captcha
-3. Install Formbuilder
-4. Add middleware
+2. Install Formbuilder
+3. Add middleware
 
 Please follow the installation instructions below step by step.
 
@@ -53,19 +52,8 @@ Add new Facade alias.
 ```
 Done.
 
-### 2. Install PHP Captcha
 
-For captcha image, we use the package from Drew Phillips https://www.phpcaptcha.org/
-
-Please add this to your composer.json file:
-```php
-    "dapphp/securimage": "~3.5"
-```
-
-and run composer update.  
-Link to GitHub: https://github.com/dapphp/securimage
-
-### 3. Install Formbuilder 
+### 2. Install Formbuilder 
 
 Now you can install the Formbuilder
 Please add this to your composer.json file:
@@ -76,7 +64,7 @@ and run composer update again.
 
 That's it.
 
-### 4. Add middleware
+### 3. Add middleware
 
 To make it work, you need to add a middleware to the Page Module.  
 If you not already have it, create a file `asgard.page.config.middleware.php` under confid folder.  
