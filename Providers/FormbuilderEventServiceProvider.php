@@ -13,7 +13,7 @@ class FormbuilderEventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-            'App\Events\FormbuilderEvent' => [
+            'Modules\Formbuilder\Events\FormbuilderEvent' => [
                     'Modules\Formbuilder\Listener\FormbuilderHandler',
             ],
     ];
