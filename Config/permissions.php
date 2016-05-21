@@ -12,5 +12,6 @@ return [
     'formbuilder.formsubmitted' => [
         'index',
         'destroy',
+        'form',
     ],
 ];

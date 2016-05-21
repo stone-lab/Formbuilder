@@ -13,11 +13,23 @@ class FormsubmittedController extends AdminBaseController
      *
      * @return Response
      */
-    public function index($id)
+    public function index()
     {
-        $currentForm = Forms::findOrFail($id);
+        $forms = Forms::all();
 
-        return view('formbuilder::admin.submitted.index', compact('currentForm'));
+        return view('formbuilder::admin.submitted.index', compact('forms'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function form($id)
+    {
+        $form = Forms::findOrFail($id);
+
+        return view('formbuilder::admin.submitted.form', compact('form'));
     }
 
     /**

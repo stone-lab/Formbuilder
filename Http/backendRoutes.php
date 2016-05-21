@@ -12,6 +12,7 @@ $router->group(['prefix' => '/formbuilder'], function (Router $router) {
     put('formbuilder/{form}/edit', ['as' => 'admin.formbuilder.formbuilder.update', 'uses' => 'FormbuilderController@update']);
     delete('formbuilder/{form}', ['as' => 'admin.formbuilder.formbuilder.destroy', 'uses' => 'FormbuilderController@destroy']);
 
-    get('formsubmitted/{form}', ['as' => 'admin.formbuilder.formsubmitted.index', 'uses' => 'FormsubmittedController@index']);
+    get('formsubmitted/', ['as' => 'admin.formbuilder.formsubmitted.index', 'uses' => 'FormsubmittedController@index']);
+    get('formsubmitted/{form}', ['as' => 'admin.formbuilder.formsubmitted.form', 'uses' => 'FormsubmittedController@form']);
     delete('formsubmitted/{form}', ['as' => 'admin.formbuilder.formsubmitted.destroy', 'uses' => 'FormsubmittedController@destroy']);
 });

@@ -3,7 +3,7 @@
 namespace Modules\Formbuilder\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Shortcode;
+use Pingpong\Shortcode\ShortcodeFacade as Shortcode;
 
 class FormbuilderServiceProvider extends ServiceProvider
 {

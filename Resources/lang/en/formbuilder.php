@@ -7,6 +7,8 @@ return [
         'create form' => 'Create form',
         'edit form' => 'Edit form',
         'form' => 'form',
+        'forms' =>'Forms',
+        'submissions' =>'Submissions'
     ],
     'button' => [
         'create form' => 'Create a form',

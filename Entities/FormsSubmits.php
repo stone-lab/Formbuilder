@@ -2,10 +2,10 @@
 
 namespace Modules\Formbuilder\Entities;
 
-use App\Events\FormbuilderEvent;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Log;
+use Modules\Formbuilder\Events\FormbuilderEvent;
 use Modules\Formbuilder\Shortcodes\FormbuilderShortcode;
 
 class FormsSubmits extends Model

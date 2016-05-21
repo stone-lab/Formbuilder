@@ -2,7 +2,7 @@
 
 @section('content-header')
     <h1>
-        {{ trans('formbuilder::formbuilder.title.form submitted') }} <small>{{ trans('formbuilder::formbuilder.title.forms') }}</small>
+        {{ trans('formbuilder::formbuilder.title.form submitted') }} <small>{{ $form->name }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ URL::route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
@@ -18,59 +18,54 @@
                 <div class="box-header">
                 </div>
                 <!-- /.box-header -->
+				<?php 
+                    $formFields = $form->getFields();
+                    $formSubmitteds = $form->formSubmit;
+                ?>
                 <div class="box-body">
                     <table class="data-table table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submitted') }}</th>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+								<th>{{ $field['label'] }}</th>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ trans('formbuilder::formbuilder.table.client_ip') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (isset($forms)): ?>
-                        <?php foreach ($forms as $form): ?>
+                        <?php if (isset($formSubmitteds)): ?>
+                        <?php foreach ($formSubmitteds as $submitted): ?>
+						<?php $data = $submitted->formSubmitData(); ?>
                         <tr>
                             <td>
-                                <a href="{{ URL::route('admin.formbuilder.formsubmitted.form', [$form->id]) }}">
-                                    {{ $form->id }}
-                                </a>
+								{{ $submitted->created_at }}
                             </td>
-                            <td>
-                                <a href="{{ URL::route('admin.formbuilder.formsubmitted.form', [$form->id]) }}">
-                                    <?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
-                                    <?php $formName    = $form->getFormContent($currentLocale)->name ?>
-                                    {{ $formName }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ URL::route('admin.formbuilder.formsubmitted.form', [$form->id]) }}">
-                                    {{ $form->created_at }}
-                                </a>
-                            </td>
-                            <td>
-                                [form id={{ $form->id }}]
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <!--<a href="{{ URL::route('admin.formbuilder.formsubmitted.form', [$form->id]) }}" class="btn btn-default btn-flat"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#confirmation-{{ $form->id }}"><i class="glyphicon glyphicon-trash"></i></button>!-->
-                                    <a href="{{ URL::route('admin.formbuilder.formsubmitted.form', [$form->id]) }}" class="btn btn-primary btn-flat">{{ trans('formbuilder::formbuilder.button.view_submitted') }}</a>
-                                </div>
-                            </td>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+							<?php $data = $submitted->formSubmitData(); ?>
+							<td>
+								<?php $fieldData = $data->firstOrNew(['field_name' => $field['name'], 'submit_id' => $submitted->id]); ?>
+								{{ $fieldData->field_value }}
+							</td>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ $submitted->client_ip }}</th>
                         </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submitted') }}</th>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+								<th>{{ $field['label'] }}</th>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ trans('formbuilder::formbuilder.table.client_ip') }}</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -95,7 +90,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline btn-flat" data-dismiss="modal">{{ trans('core::core.button.cancel') }}</button>
-                    {!! Form::open(['route' => ['admin.formbuilder.formsubmitted.destroy', $form->id], 'method' => 'delete', 'class' => 'pull-left']) !!}
+                    {!! Form::open(['route' => ['admin.formbuilder.formbuilder.destroy', $form->id], 'method' => 'delete', 'class' => 'pull-left']) !!}
                     <button type="submit" class="btn btn-outline btn-flat"><i class="glyphicon glyphicon-trash"></i> {{ trans('core::core.button.delete') }}</button>
                     {!! Form::close() !!}
                 </div>
@@ -140,10 +135,12 @@
                 },
                 "columns": [
                     null,
-                    null,
-                    null,
-                    { "sortable": false },
-                    { "sortable": false }
+					<?php if (count($formFields)): ?>
+					<?php foreach ($formFields as $field): ?>
+					null,
+					<?php endforeach; ?>
+					<?php endif; ?>
+					null,
                 ]
             });
         });

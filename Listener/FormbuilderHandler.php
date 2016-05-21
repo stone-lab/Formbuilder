@@ -2,7 +2,7 @@
 
 namespace Modules\Formbuilder\Listener;
 
-use App\Events\FormbuilderEvent;
+use Modules\Formbuilder\Events\FormbuilderEvent;
 
 class FormbuilderHandler
 {
