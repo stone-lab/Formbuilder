@@ -10,7 +10,6 @@ use Shortcode;
 class FormMail extends Model
 {
     protected $table = 'formbuilder__form_mail';
-    public $translatedAttributes = [];
     protected $fillable = ['form_id',
                             'locale',
                             'to',

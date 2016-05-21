@@ -9,7 +9,7 @@ return [
         'update',
         'destroy',
     ],
-    'formbuilder.formsubmitted' => [
+    'formbuilder.submission' => [
         'index',
         'destroy',
         'form',

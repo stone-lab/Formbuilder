@@ -31,30 +31,24 @@ class Forms extends Model
         return $this->hasOne('Modules\Formbuilder\Entities\FormMessages', 'form_id', 'id');
     }
 
-    public function formSubmit()
+    public function formSubmits()
     {
         return $this->hasMany('Modules\Formbuilder\Entities\FormsSubmits', 'form_id', 'id');
     }
 
     public function getFormContent($locale)
     {
-        $formContent = FormContent::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
-
-        return $formContent;
+        return FormContent::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
     }
 
     public function getFormMail($locale)
     {
-        $formMail = FormMail::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
-
-        return $formMail;
+        return FormMail::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
     }
 
     public function getFormMessages($locale)
     {
-        $formMessages = FormMessages::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
-
-        return $formMessages;
+        return FormMessages::firstOrNew(array('form_id' => $this->id, 'locale' => $locale));
     }
 
     public static function storeForm($data)

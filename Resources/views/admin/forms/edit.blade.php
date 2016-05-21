@@ -1,13 +1,15 @@
 @extends('layouts.master')
 
 @section('content-header')
+    <?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
+    <?php $formName    = $form->getFormContent($currentLocale)->name ?>
     <h1>
-        {{ trans('formbuilder::formbuilder.title.edit form') }}
+        {{ $formName }} <span>{{ trans('formbuilder::formbuilder.title.edit form') }}</span>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ URL::route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li><a href="{{ URL::route('admin.formbuilder.formbuilder.index') }}">{{ trans('formbuilder::formbuilder.title.form builder') }}</a></li>
-        <li class="active">{{ trans('formbuilder::formbuilder.title.edit form') }}</li>
+        <li class="active">{{ $formName }}</li>
     </ol>
 @stop
 

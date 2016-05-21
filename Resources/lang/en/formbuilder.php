@@ -3,7 +3,7 @@
 return [
     'title' => [
         'form builder' => 'Form Builder',
-        'form submitted' => 'Form Submitted',
+        'submission' => 'Submissions',
         'create form' => 'Create form',
         'edit form' => 'Edit form',
         'form' => 'form',
@@ -16,15 +16,16 @@ return [
         'update' => 'Update',
         'reset' => 'Reset',
         'cancel' => 'Cancel',
-        'view_submitted' => 'View all submitted',
+        'view submission' => 'View all submissions',
     ],
     'table' => [
         'id' => 'ID',
         'name' => 'Name',
+        'submissions' => 'Submissions',
         'created at' => 'Created at',
         'shortcode' => 'Shortcode',
         'actions' => 'Actions',
-        'submitted' => 'Submitted',
+        'submission' => 'Submission',
         'client_ip' => 'Client IP',
     ],
     'form' => [

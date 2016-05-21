@@ -11,7 +11,6 @@ use Modules\Formbuilder\Shortcodes\FormbuilderShortcode;
 class FormsSubmits extends Model
 {
     protected $table = 'formbuilder__form_submits';
-    public $translatedAttributes = [];
     protected $fillable = ['form_id', 'locale', 'client_ip'];
     public $unSaveField = ['_token', 'formbuilder_id'];
 

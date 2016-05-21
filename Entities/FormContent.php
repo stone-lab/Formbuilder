@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class FormContent extends Model
 {
     protected $table = 'formbuilder__form_contents';
-    public $translatedAttributes = [];
     protected $fillable = ['form_id', 'locale', 'name', 'content', 'json', 'edited'];
     protected $fieldsDatas = [];
 }

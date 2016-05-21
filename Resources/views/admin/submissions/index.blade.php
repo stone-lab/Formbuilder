@@ -2,24 +2,18 @@
 
 @section('content-header')
     <h1>
-        {{ trans('formbuilder::formbuilder.title.form builder') }}
+        {{ trans('formbuilder::formbuilder.title.submission') }} <small>{{ trans('formbuilder::formbuilder.title.forms') }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ URL::route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('formbuilder::formbuilder.title.form builder') }}</li>
+        <li><a href="{{ URL::route('admin.formbuilder.formbuilder.index') }}">{{ trans('formbuilder::formbuilder.title.form builder') }}</a></li>
+        <li class="active">{{ trans('formbuilder::formbuilder.title.submissions') }}</li>
     </ol>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
-                <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ URL::route('admin.formbuilder.formbuilder.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('formbuilder::formbuilder.button.create form') }}
-                    </a>
-                </div>
-            </div>
             <div class="box box-primary">
                 <div class="box-header">
                 </div>
@@ -30,6 +24,7 @@
                         <tr>
                             <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submissions') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
@@ -40,30 +35,35 @@
                         <?php foreach ($forms as $form): ?>
                         <tr>
                             <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
+                                <a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}">
                                     {{ $form->id }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
-									<?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
-									<?php $formName    = $form->getFormContent($currentLocale)->name ?>
+                                <a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}">
+                                    <?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
+                                    <?php $formName    = $form->getFormContent($currentLocale)->name ?>
                                     {{ $formName }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}">
+                                    {!! count($form->formSubmits) !!}
                                 </a>
                             </td>
                             <td>
                                 [form id={{ $form->id }}]
                             </td>
                             <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
+                                <a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}">
                                     {{ $form->created_at }}
                                 </a>
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}" class="btn btn-default btn-flat"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#confirmation-{{ $form->id }}"><i class="glyphicon glyphicon-trash"></i></button>
-									<a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}" class="btn btn-primary btn-flat">{{ trans('formbuilder::formbuilder.button.view submission') }} ({!! count($form->formSubmits) !!})</a>
+                                    <!--<a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}" class="btn btn-default btn-flat"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#confirmation-{{ $form->id }}"><i class="glyphicon glyphicon-trash"></i></button>!-->
+                                    <a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}" class="btn btn-primary btn-flat">{{ trans('formbuilder::formbuilder.button.view submission') }}</a>
                                 </div>
                             </td>
                         </tr>
@@ -74,6 +74,7 @@
                         <tr>
                             <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submissions') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
                             <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
@@ -101,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline btn-flat" data-dismiss="modal">{{ trans('core::core.button.cancel') }}</button>
-                    {!! Form::open(['route' => ['admin.formbuilder.formbuilder.destroy', $form->id], 'method' => 'delete', 'class' => 'pull-left']) !!}
+                    {!! Form::open(['route' => ['admin.formbuilder.submissions.destroy', $form->id], 'method' => 'delete', 'class' => 'pull-left']) !!}
                     <button type="submit" class="btn btn-outline btn-flat"><i class="glyphicon glyphicon-trash"></i> {{ trans('core::core.button.delete') }}</button>
                     {!! Form::close() !!}
                 </div>
@@ -148,7 +149,7 @@
                     null,
                     null,
                     null,
-					{ "sortable": false },
+                    { "sortable": false },
                     { "sortable": false }
                 ]
             });

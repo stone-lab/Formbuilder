@@ -1,82 +1,74 @@
 @extends('layouts.master')
 
 @section('content-header')
+    <?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
+    <?php $formName    = $form->getFormContent($currentLocale)->name ?>
     <h1>
-        {{ trans('formbuilder::formbuilder.title.form builder') }}
+        {{ $formName }} <small>{{ trans('formbuilder::formbuilder.title.submission') }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ URL::route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('formbuilder::formbuilder.title.form builder') }}</li>
+        <li><a href="{{ URL::route('admin.formbuilder.formbuilder.index') }}">{{ trans('formbuilder::formbuilder.title.form builder') }}</a></li>
+        <li><a href="{{ URL::route('admin.formbuilder.submissions.index') }}">{{ trans('formbuilder::formbuilder.title.submissions') }}</a></li>
+        <li class="active">{{ $formName }}</li>
     </ol>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
-                <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ URL::route('admin.formbuilder.formbuilder.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('formbuilder::formbuilder.button.create form') }}
-                    </a>
-                </div>
-            </div>
             <div class="box box-primary">
                 <div class="box-header">
                 </div>
                 <!-- /.box-header -->
+				<?php 
+                    $formFields = $form->getFields();
+                    $formSubmissions = $form->formSubmits;
+                ?>
                 <div class="box-body">
                     <table class="data-table table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submission') }}</th>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+								<th>{{ $field['label'] }}</th>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ trans('formbuilder::formbuilder.table.client_ip') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (isset($forms)): ?>
-                        <?php foreach ($forms as $form): ?>
+                        <?php if (isset($formSubmissions)): ?>
+                        <?php foreach ($formSubmissions as $submission): ?>
+						<?php $data = $submission->formSubmitData(); ?>
                         <tr>
                             <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
-                                    {{ $form->id }}
-                                </a>
+								{{ $submission->created_at }}
                             </td>
-                            <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
-									<?php $currentLocale    = LaravelLocalization::getCurrentLocale(); ?>
-									<?php $formName    = $form->getFormContent($currentLocale)->name ?>
-                                    {{ $formName }}
-                                </a>
-                            </td>
-                            <td>
-                                [form id={{ $form->id }}]
-                            </td>
-                            <td>
-                                <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}">
-                                    {{ $form->created_at }}
-                                </a>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <a href="{{ URL::route('admin.formbuilder.formbuilder.edit', [$form->id]) }}" class="btn btn-default btn-flat"><i class="glyphicon glyphicon-pencil"></i></a>
-                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#confirmation-{{ $form->id }}"><i class="glyphicon glyphicon-trash"></i></button>
-									<a href="{{ URL::route('admin.formbuilder.submissions.form', [$form->id]) }}" class="btn btn-primary btn-flat">{{ trans('formbuilder::formbuilder.button.view submission') }} ({!! count($form->formSubmits) !!})</a>
-                                </div>
-                            </td>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+							<?php $data = $submission->formSubmitData(); ?>
+							<td>
+								<?php $fieldData = $data->firstOrNew(['field_name' => $field['name'], 'submit_id' => $submission->id]); ?>
+								{{ $fieldData->field_value }}
+							</td>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ $submission->client_ip }}</th>
                         </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>{{ trans('formbuilder::formbuilder.table.id') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.name') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.shortcode') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.created at') }}</th>
-                            <th>{{ trans('formbuilder::formbuilder.table.actions') }}</th>
+                            <th>{{ trans('formbuilder::formbuilder.table.submission') }}</th>
+							<?php if (count($formFields)): ?>
+							<?php foreach ($formFields as $field): ?>
+								<th>{{ $field['label'] }}</th>
+							<?php endforeach; ?>
+							<?php endif; ?>
+							<th>{{ trans('formbuilder::formbuilder.table.client_ip') }}</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -146,10 +138,12 @@
                 },
                 "columns": [
                     null,
-                    null,
-                    null,
-					{ "sortable": false },
-                    { "sortable": false }
+					<?php if (count($formFields)): ?>
+					<?php foreach ($formFields as $field): ?>
+					null,
+					<?php endforeach; ?>
+					<?php endif; ?>
+					null,
                 ]
             });
         });

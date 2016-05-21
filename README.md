@@ -18,8 +18,8 @@ Todo
 Due the package ist based on several prerequisites, you need follow the following steps:
 1. Install Pingponglabs Shortcode Package
 2. Install PHP Captcha
-3. Adjust and integrate Middleware
-4. Install Formbuilder
+3. Install Formbuilder
+4. Add middleware
 
 Please follow the installation instructions below step by step.
 
@@ -65,50 +65,7 @@ Please add this to your composer.json file:
 and run composer update.  
 Link to GitHub: https://github.com/dapphp/securimage
 
-
-### 3. Adjust and integrate Middleware
-
-To make it work, you need to add a middleware to the Page Module.  
-Add a file PageMiddleware.php inside Modules/Page/Http/Middleware
-
-Put follwing content into it:
-```php
-<?php
-
-namespace Modules\Page\Http\Middleware;
-
-use Closure;
-use Shortcode;
-
-class PageMiddleware
-{
-    /**
-     * Run the request filter.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        $response   = $next($request);
-        $response->setContent(Shortcode::compile($response->original));
-        return $response;
-    }
-}
-```
-
-Adjust the routes in Modules/Page/Http/frontendRoutes.php to 
-```php
-    $router->get('{uri}', ['middleware'=>'page','uses' => 'PublicController@uri', 'as' => 'page']);
-    $router->get('/', ['middleware'=>'page','uses' => 'PublicController@homepage', 'as' => 'homepage']);
-```
-
-And add to app/Http/Kernel.php to $routeMiddleware
-```php
-        'page' => 'Modules\Page\Http\Middleware\PageMiddleware',
-```
-### 4. Install Formbuilder 
+### 3. Install Formbuilder 
 
 Now you can install the Formbuilder
 Please add this to your composer.json file:
@@ -118,6 +75,23 @@ Please add this to your composer.json file:
 and run composer update again.
 
 That's it.
+
+### 4. Add middleware
+
+To make it work, you need to add a middleware to the Page Module.  
+If you not already have it, create a file `asgard.page.config.middleware.php` under confid folder.  
+
+The content should look like:
+```php
+<?php
+
+return [
+    'Modules\Formbuilder\Http\Middleware\FormbuilderMiddleware'
+];
+```
+
+***Notice: This feature was newly added to the page module. Make sure you got the latest version***
+
 
 ### 5. Permission
 Don't forget to set the Permissions for the newly added Formbuilder module.

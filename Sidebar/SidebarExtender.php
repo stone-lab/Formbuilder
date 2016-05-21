@@ -52,9 +52,9 @@ class SidebarExtender implements \Maatwebsite\Sidebar\SidebarExtender
                 $item->item(trans('formbuilder::formbuilder.title.submissions'), function (Item $item) {
                     $item->weight(1);
                     $item->icon('fa fa-envelope-o');
-                    $item->route('admin.formbuilder.formsubmitted.index');
+                    $item->route('admin.formbuilder.submissions.index');
                     $item->authorize(
-                        $this->auth->hasAccess('formbuilder.formsubmitted.index')
+                        $this->auth->hasAccess('formbuilder.submission.index')
                     );
                 });
             });
